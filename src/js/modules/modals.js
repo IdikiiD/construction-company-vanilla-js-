@@ -1,32 +1,49 @@
 const modals = () => {
     function bindModal(triggerSelector, modalSelector, closeSelector) {
-        triggerSelector.addEventListener('click', (e) => {
-            if (e.target) {
-                e.preventDefault();
-            }
-            modalSelector.style.display = 'block';
+        const trigger = document.querySelectorAll(triggerSelector),
+            modal = document.querySelector(modalSelector),
+            close = document.querySelector(closeSelector);
 
-            document.body.classList.add('modal-open')
+        trigger.forEach((item) => {
+            item.addEventListener('click', (e) => {
+                if (e.target) {
+                    e.preventDefault();
+                }
+
+                modal.style.display = 'block';
+                document.body.classList.add('modal-open')
+            })
         })
-        closeSelector.addEventListener('click', () => {
-            modalSelector.style.display = 'none';
+
+
+        close.addEventListener('click', () => {
+            modal.style.display = 'none';
 
             document.body.classList.remove('modal-open')
         })
-        modalSelector.addEventListener('click', (e) => {
-            if (e.target === modalSelector) {
-                modalSelector.style.display = 'none';
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
 
                 document.body.classList.remove('modal-open')
             }
         })
     }
 
-    const callEngineerButton = document.querySelector('.popup_engineer_btn'),
-        modalEngineer = document.querySelector('.popup_engineer'),
-        modalEngineerClose = document.querySelector('.popup_engineer .popup_close');
+    function showModalByTime(selector, time) {
+        setTimeout(function () {
+            document.querySelector(selector).style.display = 'block';
+            document.body.classList.add('modal-open')
+        }, time);
+    }
 
-    bindModal(callEngineerButton, modalEngineer, modalEngineerClose);
+
+    bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
+    bindModal('.phone_link', '.popup', '.popup .popup_close');
+    showModalByTime('.popup', 1000);
+
+
 }
 
 export default modals;
