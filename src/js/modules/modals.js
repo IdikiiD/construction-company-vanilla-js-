@@ -9,9 +9,11 @@ const modals = () => {
                 if (e.target) {
                     e.preventDefault();
                 }
+                const scrollWidth = getScrollWidth()
 
                 modal.style.display = 'block';
                 document.body.classList.add('modal-open')
+                document.body.style.marginRight = `${scrollWidth}px`;
             })
         })
 
@@ -20,6 +22,7 @@ const modals = () => {
             modal.style.display = 'none';
 
             document.body.classList.remove('modal-open')
+            document.body.style.marginRight = '';
         })
 
         modal.addEventListener('click', (e) => {
@@ -27,6 +30,7 @@ const modals = () => {
                 modal.style.display = 'none';
 
                 document.body.classList.remove('modal-open')
+                document.body.style.marginRight = '';
             }
         })
     }
@@ -36,6 +40,9 @@ const modals = () => {
             document.querySelector(selector).style.display = 'block';
             document.body.classList.add('modal-open')
         }, time);
+    }
+    function getScrollWidth() {
+        return window.innerWidth - document.documentElement.clientWidth;
     }
 
 
