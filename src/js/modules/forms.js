@@ -10,11 +10,16 @@ const forms = () => {
     }
     const postData = async (url, data) => {
         document.querySelector('.status').textContent = message.loading;
+
         let res = await fetch(url, {
-            method: "POST",
-            body: data
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         });
-        return await res.text();
+
+        return await res.json();
     }
 
     const clearInputs = (statusMessage) => {
@@ -29,29 +34,29 @@ const forms = () => {
 
             const statusMessage = document.createElement('div');
             statusMessage.classList.add('status');
+            item.append(statusMessage);
 
-            const formData = new FormData(item);
+            const data = {};
+            new FormData(item).forEach((value, key) => {
+                data[key] = value;
+            });
 
-            postData('assets/server.php', formData)
+            postData('http://localhost:3000/login', data)
                 .then(res => {
-                    console.log(res);
+                    console.log('RESPONSE:', res);
                     statusMessage.textContent = message.success;
                 })
                 .catch(() => {
                     statusMessage.textContent = message.failure;
                 })
                 .finally(() => {
-                    inputs.forEach(item => {
-                        clearInputs(statusMessage)
-                    })
-                    setTimeout(() => {
-                        statusMessage.remove()
-                    }, 5000);
-                })
-
-        })
+                    clearInputs();
+                    setTimeout(() => statusMessage.remove(), 5000);
+                });
+        });
 
 
     })
 
 }
+export default forms;
