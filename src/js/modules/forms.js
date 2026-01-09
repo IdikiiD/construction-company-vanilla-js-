@@ -1,6 +1,14 @@
 const forms = () => {
     const form = document.querySelectorAll('form'),
-        inputs = document.querySelectorAll('input');
+        inputs = document.querySelectorAll('input'),
+        phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+
+    phoneInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            input.value = input.value.replace(/[^+\d]/g, '');
+        })
+    });
+
 
 
     const message = {
