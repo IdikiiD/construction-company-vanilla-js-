@@ -1,6 +1,6 @@
 import checkNumInputs from './checkNumInputs';
 
-const forms = () => {
+const forms = (state) => {
     const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input');
 
@@ -46,6 +46,11 @@ const forms = () => {
             new FormData(item).forEach((value, key) => {
                 data[key] = value;
             });
+            if (item.getAttribute('data-calc') === "end") {
+                for (let key in state) {
+                    data[key] = state[key];
+                }
+            }
 
             postData('http://localhost:3000/login', data)
                 .then(res => {
