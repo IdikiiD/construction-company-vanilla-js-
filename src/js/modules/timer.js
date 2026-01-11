@@ -18,7 +18,9 @@ const timer = (id, deadline) => {
         const minutes = timer.querySelector('#minutes');
         const seconds = timer.querySelector('#seconds');
 
-        const updateClock = () => {
+        updateClock()
+
+        function updateClock  (){
             const t = getTimeRemaining(endtime);
 
             days.textContent = addZero(t.days);
